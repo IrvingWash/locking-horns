@@ -1,1 +1,5 @@
-console.log('Hello, horns');
+export {
+	Horns,
+	type HornName,
+	type HerdAction,
+} from './horns';
