@@ -5,7 +5,7 @@ import {
 } from '@jest/globals';
 
 describe('Dummy test', () => {
-	it('shout do dummy work', () => {
+	it('should do dummy work', () => {
 		// Bonk
 		expect(true).toBe(true);
 	});
