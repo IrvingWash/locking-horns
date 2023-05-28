@@ -1,6 +1,7 @@
 import {
 	HerdAction,
 	HornLock,
+	HornLockImpl,
 	LockName,
 } from './lock';
 
@@ -17,7 +18,7 @@ export class Horns<T extends {}> {
 	public constructor(name: LockName, herdHandler: HerdHandler<T>, herdAction: HerdAction<T>) {
 		this._herdAction = herdAction;
 		this._herdHandler = herdHandler;
-		this._hornLock = new HornLock(name, this._herdHandler);
+		this._hornLock = new HornLockImpl(name, this._herdHandler);
 	}
 
 	/**

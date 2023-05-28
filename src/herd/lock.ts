@@ -1,6 +1,6 @@
 import {
 	Bellow,
-	Herd,
+	HerdImpl,
 	HerdHandler,
 } from './herd';
 
@@ -18,22 +18,32 @@ export type HerdAction<T extends {}> = (bellow: Bellow<T>) => Promise<void>;
 /**
  * A lock to create the master tab.
  */
-export class HornLock<T extends {}> {
+export interface HornLock<T extends {}> {
+	/**
+	 * Lock the tabs so only one of them is fetching data
+	 * and all the others are getting the data from the fetching one.
+	 */
+	lock(action: HerdAction<T>): Promise<void>;
+
+	/**
+	 * Release the lock to make each tab independent.
+	 * This method is available only after locking.
+	 */
+	unlock(): void;
+}
+
+export class HornLockImpl<T extends {}> implements HornLock<T> {
 	private _name: LockName;
-	private _herd: Herd<T>;
+	private _herd: HerdImpl<T>;
 	private _unlock?: () => void;
 
 	public constructor(name: LockName, herdHandler: HerdHandler<T>) {
 		this._name = name;
 
-		this._herd = new Herd<T>(this._name);
+		this._herd = new HerdImpl<T>(this._name);
 		this._herd.setListeningHandler(herdHandler);
 	}
 
-	/**
-	 * Lock the tabs so only one of them is fetching data
-	 * and all the others are getting the data from the fetching one.
-	 */
 	public async lock(action: HerdAction<T>): Promise<void> {
 		const deferredAction = async(): Promise<void> => new Promise(
 			async(resolve: () => void) => {
@@ -46,10 +56,6 @@ export class HornLock<T extends {}> {
 		await navigator.locks.request(this._name, deferredAction);
 	}
 
-	/**
-	 * Release the lock to make each tab independent.
-	 * This method is available only after locking.
-	 */
 	public unlock(): void {
 		this._herd?.destroy();
 

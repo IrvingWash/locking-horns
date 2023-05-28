@@ -10,35 +10,43 @@ export type Bellow<T extends {}> = (data: T) => void;
  */
 export type HerdHandler<T extends {}> = (event: MessageEvent<T>) => void;
 
-type HerdName = LockName
-
 /**
  * A herd of tabs that share date together.
  */
-export class Herd<T extends {}> {
+export interface Herd<T extends {}> {
+	/**
+	 * Share data between the tabs.
+	 */
+	bellow: Bellow<T>;
+
+	/**
+	 * Set the behavior for tabs that received data.
+	 */
+	setListeningHandler(handler: HerdHandler<T>): void;
+
+	/**
+	 * Destroy the herd.
+	 */
+	destroy(): void;
+}
+
+type HerdName = LockName
+
+export class HerdImpl<T extends {}> implements Herd<T> {
 	private _broadcastChannel: InstanceType<typeof BroadcastChannel>;
 
 	public constructor(name: HerdName) {
 		this._broadcastChannel = new BroadcastChannel(name);
 	}
 
-	/**
-	 * Share data between the tabs.
-	 */
 	public bellow: Bellow<T> = (data: T): void => {
 		this._broadcastChannel.postMessage(data);
 	};
 
-	/**
-	 * Set the behavior for tabs that received data.
-	 */
 	public setListeningHandler(handler: HerdHandler<T>): void {
 		this._broadcastChannel.onmessage = handler;
 	}
 
-	/**
-	 * Destroy the herd.
-	 */
 	public destroy(): void {
 		this._broadcastChannel.close();
 	}
