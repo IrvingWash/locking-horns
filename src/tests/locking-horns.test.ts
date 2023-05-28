@@ -60,7 +60,7 @@ describe('Locking horns', () => {
 		}, 3000));
 	}, 15000);
 
-	it('should send requests in the master tab', async() => {
+	it('should not send requests in the other tabs', async() => {
 		page2.setRequestInterception(true);
 
 		let page2RequestCounter = 0;
