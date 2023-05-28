@@ -1,9 +1,18 @@
 import { LockName } from './horns';
 
-type HerdName = LockName
-type HerdHandler<T = {}> = (event: MessageEvent<T>) => void;
+/**
+ * A function to share data from the master tab
+ */
+export type Bellow<T extends {}> = (data: T) => void;
 
-export class Herd<T = {}> {
+/**
+ * A function which is triggered in the tabs when the master tab sends new data
+ */
+export type HerdHandler<T extends {}> = (event: MessageEvent<T>) => void;
+
+type HerdName = LockName
+
+export class Herd<T extends {}> {
 	private _broadcastChannel: InstanceType<typeof BroadcastChannel>;
 
 	public constructor(name: HerdName) {
@@ -11,11 +20,11 @@ export class Herd<T = {}> {
 	}
 
 	/**
-	 * Share data between tabs.s
+	 * Share data between the tabs.
 	 */
-	public bellow(data: T): void {
+	public bellow: Bellow<T> = (data: T): void => {
 		this._broadcastChannel.postMessage(data);
-	}
+	};
 
 	/**
 	 * Set the behavior for tabs that received data.

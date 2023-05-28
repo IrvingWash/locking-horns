@@ -1,5 +1,10 @@
 export {
 	Horns,
-	type LockName as HornName,
+	type LockName,
 	type HerdAction,
 } from './horns';
+
+export {
+	type Bellow,
+	type HerdHandler,
+} from './herd';
