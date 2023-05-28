@@ -1,4 +1,4 @@
-import { LockName } from './horns';
+import { LockName } from './lock';
 
 /**
  * A function to share data from the master tab
@@ -12,6 +12,9 @@ export type HerdHandler<T extends {}> = (event: MessageEvent<T>) => void;
 
 type HerdName = LockName
 
+/**
+ * A herd of tabs that share date together
+ */
 export class Herd<T extends {}> {
 	private _broadcastChannel: InstanceType<typeof BroadcastChannel>;
 

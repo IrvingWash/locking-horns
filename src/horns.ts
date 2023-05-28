@@ -1,55 +1,30 @@
-import {
-	Bellow,
-	Herd,
-	HerdHandler,
-} from './herd';
-
-/**
- * The name of a lock.
- * It's shared between the tabs and used to determine the master tab.
- */
-export type LockName = string;
-
-/**
- * The action that has to be performed only in the master tab.
- */
-export type HerdAction<T extends {}> = (bellow: Bellow<T>) => Promise<void>;
+import { Bellow, HerdHandler } from './herd';
+import { HerdAction, Lock, LockName } from './lock';
 
 export class Horns<T extends {}> {
-	private _name: LockName;
-	private _herd: Herd<T>;
-	private _unlock?: () => void;
+	private readonly _herdHandler: HerdHandler<T>;
+	private readonly _herdAction: HerdAction<T>;
+	private readonly _lock: Lock<T>;
 
-	public constructor(name: LockName, herdHandler: HerdHandler<T>) {
-		this._name = name;
-
-		this._herd = new Herd<T>(this._name);
-		this._herd.setListeningHandler(herdHandler);
+	public constructor(name: LockName, herdHandler: HerdHandler<T>, herdAction: HerdAction<T>) {
+		this._herdAction = herdAction;
+		this._herdHandler = herdHandler;
+		this._lock = new Lock(name, this._herdHandler);
 	}
 
-	/**
-	 * Lock the tabs so only one of them is fetching data
-	 * and all the others are getting the data from the fetching one.
-	 */
-	public async lock(action: HerdAction<T>): Promise<void> {
-		const deferredAction = async(): Promise<void> => new Promise(
-			async(resolve: () => void) => {
-				this.unlock = resolve;
+	public lock = async(): Promise<void> => {
+		return await this._lock.lock(this._herdAction);
+	};
 
-				await action(this._herd.bellow);
-			}
-		);
+	public unlock = (): void => {
+		return this._lock.unlock();
+	};
 
-		await navigator.locks.request(this._name, deferredAction);
-	}
+	public herdHandler = (event: MessageEvent<T>): void => {
+		return this._herdHandler(event);
+	};
 
-	/**
-	 * Release the lock to make each tab independent.
-	 * This method is available only after locking.
-	 */
-	public unlock(herd: Herd<T>): void {
-		herd?.destroy();
-
-		this._unlock?.();
-	}
+	public herdAction = async(bellow: Bellow<T>): Promise<void> => {
+		return await this._herdAction(bellow);
+	};
 }
