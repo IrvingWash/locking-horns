@@ -1,8 +1,8 @@
 # Horns
 
 ## Description
-Horns is a small library that helps to decrease workload in a multitab browser session.
-Framework agnostic. Zero dependency. Not tested.
+Horns is a small library that helps to decrease workload in a multitab browser session.  
+Framework agnostic. Zero dependency. ...Not tested.
 
 Let's say you are making a request to an endpoint every second.
 A user opens four tabs (they really need that much). Now it's four requests per second. Not cool nor for the server nor for the user.
