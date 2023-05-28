@@ -1,5 +1,16 @@
-import { afterEach, beforeEach, describe, expect, it } from '@jest/globals';
-import puppeteer, { Browser, Page } from 'puppeteer';
+import {
+	afterEach,
+	beforeEach,
+	describe,
+	expect,
+	it,
+} from '@jest/globals';
+
+import puppeteer, {
+	Browser,
+	Page,
+} from 'puppeteer';
+
 import { openLocalPage } from './utils';
 
 describe('Locking horns', () => {
