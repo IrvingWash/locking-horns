@@ -12,7 +12,7 @@
 		"url": "git+https://github.com/IrvingWash/locking-horns.git"
 	},
 	"scripts": {
-		"test": "jest",
+		"test": "jest --forceExit",
 		"lint": "eslint \"src/**/*\" --max-warnings=0",
 		"check-ts": "tsc --noEmit",
 		"build": "tsc --project tsconfig.build.json",

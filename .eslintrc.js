@@ -9,6 +9,7 @@ module.exports = {
 		'.eslintrc.js',
 		'jest.config.js',
 		'dist',
+		'src/tests/test-app',
 	],
 	plugins: ['@typescript-eslint/eslint-plugin'],
 	root: true,

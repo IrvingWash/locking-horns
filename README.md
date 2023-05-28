@@ -25,7 +25,7 @@ import {
 	Horns,
 	HerdHandler,
 	HerdAction,
-} from 'locking-horns'
+} from 'locking-horns';
 
 export function App(): JSX.Element {
 	const [name, setName] = useState<string | undefined>();
@@ -62,7 +62,7 @@ export function App(): JSX.Element {
 		return () => {
 			// Release the lock when the component is unmounted
 			horns.unlock();
-		}
+		};
 	}, []);
 
 	return (
@@ -75,7 +75,7 @@ export function App(): JSX.Element {
 	async function getPokemonName(): Promise<void> {
 		// Automatically select a master tab
 		// and start invoking `herdAction`
-		horns.lock(herdAction);
+		horns.lock();
 	}
 
 	function getRandomPokemonId(): number | undefined {
