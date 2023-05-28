@@ -1,5 +1,5 @@
 export {
 	Horns,
-	type HornName,
+	type LockName as HornName,
 	type HerdAction,
 } from './horns';
