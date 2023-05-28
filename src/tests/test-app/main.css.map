@@ -1,1 +1,0 @@
-{"version":3,"file":"main.css","mappings":"AAAA;CACC,SAAS;CACT,UAAU;CACV,sBAAsB;AACvB;;AAEA;CACC,uBAAuB;CACvB,cAAmB;AACpB","sources":["webpack://izanagi/./src/index.pcss"],"sourcesContent":["* {\n\tmargin: 0;\n\tpadding: 0;\n\tbox-sizing: border-box;\n}\n\nbody {\n\tfont-family: sans-serif;\n\tcolor: $fancy-black;\n}\n"],"names":[],"sourceRoot":""}
