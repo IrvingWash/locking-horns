@@ -15,7 +15,10 @@ export type LockName = string;
  */
 export type HerdAction<T extends {}> = (bellow: Bellow<T>) => Promise<void>;
 
-export class Lock<T extends {}> {
+/**
+ * A lock to create the master tab.
+ */
+export class HornLock<T extends {}> {
 	private _name: LockName;
 	private _herd: Herd<T>;
 	private _unlock?: () => void;

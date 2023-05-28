@@ -1,19 +1,19 @@
 import { LockName } from './lock';
 
 /**
- * A function to share data from the master tab
+ * A function that shares data from the master tab.
  */
 export type Bellow<T extends {}> = (data: T) => void;
 
 /**
- * A function which is triggered in the tabs when the master tab sends new data
+ * A function which is triggered in the tabs when the master tab sends new data.
  */
 export type HerdHandler<T extends {}> = (event: MessageEvent<T>) => void;
 
 type HerdName = LockName
 
 /**
- * A herd of tabs that share date together
+ * A herd of tabs that share date together.
  */
 export class Herd<T extends {}> {
 	private _broadcastChannel: InstanceType<typeof BroadcastChannel>;
