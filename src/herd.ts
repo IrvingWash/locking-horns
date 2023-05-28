@@ -1,6 +1,7 @@
 import { HornName } from './horns';
 
 type HerdName = HornName
+type HerdHandler<T = {}> = (event: MessageEvent<T>) => void;
 
 export class Herd<T = {}> {
 	private _broadcastChannel: InstanceType<typeof BroadcastChannel>;
@@ -13,7 +14,7 @@ export class Herd<T = {}> {
 		this._broadcastChannel.postMessage(data);
 	}
 
-	public setListeningHandler(handler: (event: MessageEvent<T>) => void): void {
+	public setListeningHandler(handler: HerdHandler<T>): void {
 		this._broadcastChannel.onmessage = handler;
 	}
 
