@@ -2,13 +2,13 @@
 
 ## Description
 **Locking Horns** is a small library that helps to decrease workload in a multitab browser session.  
-Framework agnostic. Zero dependency. ~~...Not tested~~ (tested!).
+Framework agnostic. Zero dependency. ~~...Not tested yet~~ (tested!).
 
 Let's say you are making a request to an endpoint every second.
-A user opens four tabs (they really need that much). Now it's four requests per second. Not cool nor for the server nor for the user.
+A user opens four tabs. Now it's four requests per second. Not cool nor for the server nor for the user.
 
 **Locking Horns** lets you avoid this issue by creating a master tab. Only the master tab will perform the resourceful action.
-All the other tabs will work for the user the same, the only difference is, they now receive the data from the master tab (and not from the server)!
+All the other tabs will work for the user like before, the only difference is, theese tab now will receive the data from the master tab (and not from the server)!
 Moreover. If the master tab is closed, another tab automatically takes the role.
 
 ## How does it work?
